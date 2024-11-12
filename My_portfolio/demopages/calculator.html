@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1 id="head">Calculator</h1>
+    <div class="container">
+        <div class="calculator">
+            <input type="text"  id="display" disabled />
+            <div class="buttons">
+            <button onclick="displayclear()">AC</button>
+            <button onclick="backspace()">Back</button>
+            <button onclick="adOperator('%')">%</button>
+            <button onclick="adOperator('/')">/</button>
+            <button onclick="adNumber('7')">7</button>
+            <button onclick="adNumber('8')">8</button>
+            <button onclick="adNumber('9')">9</button>
+            <button onclick="adOperator('*')">*</button>
+            <button onclick="adNumber('4')">4</button>
+            <button onclick="adNumber('5')">5</button>
+            <button onclick="adNumber('6')">6</button>
+            <button onclick="adOperator('-')">-</button>
+            <button onclick="adNumber('1')">1</button>
+            <button onclick="adNumber('2')">2</button>
+            <button onclick="adNumber('3')">3</button>
+            <button onclick="adOperator('+')">+</button>
+            <button onclick="adNumber('00')">00</button>
+            <button onclick="adNumber('0')">0</button>
+            <button onclick="adNumber('.')">.</button>
+            <button onclick="Result()">=</button>
+            </div>   
+        </div>   
+        <div class="contact">
+            <h2>Contact</h2>
+        <form id="contactform">
+            <div class="nam">
+            <input type="email" placeholder="Email" required >
+            </div>
+            <textarea  id="feedtxt" placeholder="Enter your feedback!" required ></textarea>
+            <button onclick="send()">Send</button>
+            <p id="feedmsg" class="feed-msg"></p>
+        </form>
+        </div>
+    </div>
+</body>
+<style>
+    body {
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f9;
+        font-family:'Arial, Helvetica, sans-serif';
+    }
+    .container{
+        position: fixed;left: 150px; top: 80px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        gap: 20px;
+    }
+    #head{
+        color: black;
+        position: fixed;
+        margin: 20px;
+        padding-top: 10px;
+        padding-left: 30px;
+        text-align:left;
+    }
+    .calculator {
+        margin-top: 0%;
+        margin: 80px;
+        width: 300px;
+        padding: 30px;
+        background-color: rgb(223, 210, 210);
+        border-radius: 15px;
+        box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
+    }
+    
+    #display {
+        width: 97%;
+        height: 40px;
+        font-size: 20px;
+        margin-bottom: 25px;
+        text-align:right;
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #f4f4f9;
+    }
+    
+    .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+    button {
+        font-size: 20px;
+        padding: 12px;  
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        
+    }
+    
+    button:hover {
+        background-color: rgb(220, 84, 238);
+    }
+    
+    button:nth-child(4n) {
+        justify-content: center;
+        border-radius: 30%;
+        background-color: #9b968e;
+    }
+    button:nth-child(20) {
+        background-color:rgb(212, 80, 212);
+    }
+    
+    h2{
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+    .contact{
+        height: 320px;
+        width: 300px;
+        padding: 15px;
+        background-color: rgb(223, 210, 210);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
+    }
+    .nam{
+        border-radius: 5px;
+        padding:20px;
+    }
+    
+    input[type="email"]{
+        margin-left: 20px;
+        padding: 5px;
+        width: 70%;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+    .contact textarea{
+        margin-left: 20px;
+        margin-bottom: 20px;
+        padding:20px;
+        width: 70%;
+    }
+    .feed-msg{
+        text-align: center;
+        font-weight: bold;
+    }
+    .contact button{
+        margin-left: 90px;
+        text-align: center;
+        border-radius: 5px;
+        padding: 10px;
+        width: 40%;
+        background-color: rgb(250, 5, 140);
+    }
+    </style>
+<script>
+function displayclear() {
+    document.getElementById("display").value = "";
+}
+
+function adNumber(number) {
+    document.getElementById("display").value += number;
+}
+
+function adOperator(operator) {
+    const display = document.getElementById("display");
+    const curValue = display.value;
+    if (curValue !== "" && !isNaN(curValue[curValue.length - 1])) {
+        display.value += operator;
+    }
+}
+function backspace(number){
+    const display = document.getElementById("display");
+    display.value = display.value.slice(0 , -1);
+}
+function Result() {
+    const display = document.getElementById("display");
+    try {
+        display.value = eval(display.value);
+    } catch (error) {
+        display.value = "Error";
+    }
+}
+
+function send(){
+
+    const emailfeed = document.querySelector('input[type="email"]');
+    const feedtxt = document.getElementById("feedtxt").value;
+    const feedmsg = document.getElementById("feedmsg");
+    console.log("Form submitted");
+    if(emailfeed.checkValidity() && feedtxt.trim() !== ""){
+        feedmsg.textContent = "thanks for the feedback!";
+        feedmsg.style.color = "blue";
+        emailfeed.value = "";
+        document.getElementById("feedtxt").value = "";
+        
+    }else{
+        feedmsg.textContent = "Enter your feedback!";
+        feedmsg.style.color = "blue";
+    }
+}
+</script>
+</html>
